@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman User Selection</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0 10px;
+            background: #3C2A21!important;
+        }
+
+        .btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 600px;
+            width: 800px;
+            background-color: antiquewhite;
+            border-radius: 16px;
+        }
+        .container{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .container button{
+          padding: 8px 16px;
+          border-radius: 8px;
+          background-color: #3C2A21;
+          color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="btn">
+        <div class="container">
+            <h1>Hangman User Selection</h1>
+
+            <!-- Dropdown for existing users -->
+            <label for="existingUser">Choose Existing User:</label>
+            <select id="existingUser">
+                <option value="">Select User</option>
+                <!-- Add existing users dynamically using JavaScript -->
+            </select>
+
+            <!-- Input for creating a new user -->
+            <label for="newUser">Create New User:</label>
+            <input type="text" id="newUser" placeholder="Enter a new username">
+
+            <button onclick="startHangman()">Start Hangman</button>
+            <button onclick="createNewUser()">Create New User</button>
+        </div>
+    </div>
+
+    <script >
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Retrieve existing users from local storage
+  updateExistingUsersDropdown();
+
+  // Optional: You can also display the last selected user (if any)
+  displayLastSelectedUser();
+});
+
+function updateExistingUsersDropdown() {
+  const existingUsers = getExistingUsersFromLocalStorage();
+  console.log('Existing Users:', existingUsers);
+
+  const existingUserDropdown = document.getElementById("existingUser");
+
+  // Clear existing options
+  existingUserDropdown.innerHTML = '<option value="">Select User</option>';
+
+  // Add existing users dynamically
+  existingUsers.forEach(user => {
+    const option = document.createElement("option");
+    option.value = user;
+    option.text = user;
+    existingUserDropdown.add(option);
+  });
+}
+
+function displayLastSelectedUser() {
+  const lastSelectedUser = localStorage.getItem('hangmanUser');
+  console.log('Last Selected User:', lastSelectedUser);
+
+  if (lastSelectedUser) {
+    document.getElementById("existingUser").value = lastSelectedUser;
+  }
+}
+
+function getExistingUsersFromLocalStorage() {
+  const existingUsers = JSON.parse(localStorage.getItem('hangmanUsers')) || [];
+  return existingUsers;
+}
+
+function createNewUser() {
+  const newUserInput = document.getElementById("newUser");
+  const newUser = newUserInput.value.trim();
+
+  if (newUser) {
+    // Save the new user to local storage
+    const existingUsers = getExistingUsersFromLocalStorage();
+    existingUsers.push(newUser);
+    localStorage.setItem('hangmanUsers', JSON.stringify(existingUsers));
+    console.log('New User Created:', newUser);
+
+    // Update the existing users dropdown
+    updateExistingUsersDropdown();
+
+    // Display the last selected user (newly created user)
+    displayLastSelectedUser();
+
+    // Enable the "Start Hangman" button
+    document.querySelector("button").disabled = false;
+  } else {
+    alert("Please enter a valid new username.");
+  }
+}
+
+function startHangman() {
+  // Get the selected or created username
+  const selectedUser = document.getElementById("existingUser").value || document.getElementById("newUser").value.trim();
+
+  if (selectedUser) {
+    // Save the selected or created username in local storage
+    localStorage.setItem('hangmanUser', selectedUser);
+
+    // Redirect to the Hangman game page
+    window.location.href = 'hangman.html';
+  } else {
+    alert("Please select or enter a username to start the game.");
+  }
+}
+
+// Call the function to update the dropdown when the page is reloaded
+updateExistingUsersDropdown();
+    </script>
+</body>
+</html>

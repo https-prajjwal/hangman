@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <div class="game-modal">
+    <div class="content">
+      <img src="images/lost.gif" alt="gif">
+      <h4>Game Over!</h4>
+      <p>The correct word was: <b>rainbow</b></p>
+      <button class="play-again">Play Again</button>
+    </div>
+  </div>
+
+  <div class="outer">
+    <div class="intro">
+      <h1>Welcome to Hangman Game</h1>
+      <p>User: <span id="hangmanUser"></span></p>
+    </div>
+
+  
+
+    <div class="container">
+      <div class="hangman">
+        <img src="images/hangman-0.svg" alt="">
+        <h1>Hangman Game</h1>
+      </div>
+      <div class="game-box">
+        <ul class="word"></ul>
+        <h4 class="hint">
+          Hint:
+          <b>
+            Lorem Ipsum
+          </b>
+        </h4>
+        <h4 class="guesses">
+          Incorrect guesses:
+          <b>0 / 6</b>
+        </h4>
+        <div class="keyboard"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="./scripts/scripts.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+  // Retrieve and display the selected username from local storage
+  const hangmanUserElement = document.getElementById("hangmanUser");
+  const hangmanUser = localStorage.getItem('hangmanUser');
+  
+  if (hangmanUser) {
+    hangmanUserElement.textContent = hangmanUser;
+  } else {
+    // If no username is found, redirect back to the user selection page
+    window.location.href = './userSelect.html';
+  }
+});
+  </script>
+
+</body>
+</html>

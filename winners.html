@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winners</title>
+  <link rel="stylesheet" href="style.css">
+
+
+  <style>
+  body{
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 10px;
+    background: #3C2A21!important;
+}
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 600px;
+      width: 800px;
+      background: antiquewhite;
+      border-radius: 16px;
+    }
+
+
+    button{
+      padding: 8px 16px; 
+      background-color: #3C2A21; 
+      color: white; 
+      border-radius: 8px;
+      margin-top: 32px;
+    }
+
+    button:hover{
+      background: #D5CEA3;
+      transition: 0.3s ease;
+      color: #1A120B;
+    }
+
+    .winners-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+
+    table {
+  width: 100%;
+  border: 2px solid;
+  margin-top: 20px;
+  
+}
+
+thead {
+  background-color: #3C2A21;
+  color: #fff;
+}
+
+thead th, tbody td {
+  padding: 12px;
+  text-align: left;
+  text-align: center;
+}
+
+
+
+tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+  </style>
+</head>
+<body>
+  <div class="btn">
+  <div class="winners-container">
+  <h1 style="margin: 16px;">Winners Table</h1>
+
+  <table id="winnersTable">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Wins</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+
+  <button onclick="goToUserPage()">Go Back to User Page</button>
+</div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Retrieve winners from local storage
+  const winners = JSON.parse(localStorage.getItem('hangmanWinners')) || [];
+
+  // Populate the winners table
+  const winnersTable = document.getElementById("winnersTable");
+  const tbody = winnersTable.querySelector("tbody");
+
+  winners.forEach(winner => {
+    const row = document.createElement("tr");
+    const userCell = document.createElement("td");
+    userCell.textContent = winner.user;
+    const winsCell = document.createElement("td");
+    winsCell.textContent = winner.wins;
+
+    row.appendChild(userCell);
+    row.appendChild(winsCell);
+    tbody.appendChild(row);
+  });
+});
+
+function goToUserPage() {
+  // Reload the user selection page to update the user list
+  window.location.href = 'userSelect.html';
+  // Alternatively, you can use:
+  // window.location.reload(true);
+}
+
+
+
+</script>
+</body>
+</html>
